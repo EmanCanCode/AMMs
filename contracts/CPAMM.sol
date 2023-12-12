@@ -13,10 +13,10 @@ contract CPAMM {
     uint public reserveA;
     uint public reserveB;
 
-    // Track total supply
+    // Track total supply of shares
     uint public totalSupply;
 
-    // Track user balances
+    // Track user balances of shares
     mapping(address => uint) public balanceOf;
 
     constructor(
@@ -85,6 +85,10 @@ contract CPAMM {
         uint _amountA,
         uint _amountB
     ) external returns (uint _shares) {
+        require(
+            _amountA > 0 && _amountB > 0,
+            "CPAMM.addLiquidity(): Invalid amount of tokens to add"
+        );
         // get amount of tokenA and tokenB to add
         tokenA.transferFrom(msg.sender, address(this), _amountA);
         tokenB.transferFrom(msg.sender, address(this), _amountB);
@@ -140,6 +144,8 @@ contract CPAMM {
     function removeLiquidity(
         uint _shares
     ) external returns (uint _amountA, uint _amountB) {
+        require(_shares <= balanceOf[msg.sender], "CPAMM.removeLiquidity(): Invalid amount of shares to burn");
+        require(_shares > 0, "CPAMM.removeLiquidity(): Invalid amount of shares to burn");
         // calculate amount of tokenA and tokenB to send to msg.sender
         /*
             dx = s / T * x
