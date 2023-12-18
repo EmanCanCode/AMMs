@@ -116,8 +116,8 @@ describe("CPAMM", () => {
                 await tokenA.connect(liquidityProvider).approve(contract.address, 500);
                 await tokenB.connect(liquidityProvider).approve(contract.address, 500);
                 await contract.connect(liquidityProvider).addLiquidity(
-                    220,
-                    91
+                    ratio.tokenA,
+                    ratio.tokenB
                 );
                 reserveA = await contract.reserveA();
                 reserveB = await contract.reserveB();

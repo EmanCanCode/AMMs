@@ -28,7 +28,6 @@ contract CPAMM {
         tokenB = _tokenB;
     }
     
-    
     function _mint(address to, uint amount) private {
         totalSupply += amount;
         balanceOf[to] += amount;
