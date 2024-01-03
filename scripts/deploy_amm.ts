@@ -37,6 +37,12 @@ async function main() {
     await et1.connect(signerWithProvider).approve(amm.address, ethers.utils.parseEther('10000000'));
     await et2.connect(signerWithProvider).approve(amm.address, ethers.utils.parseEther('10000000'));
 
+    const tx = await amm.connect(signerWithProvider).addLiquidity(
+        ethers.utils.parseEther('1000000'),
+        ethers.utils.parseEther('500000'),
+    );
+    await tx.wait();
+
     console.log('//     -----     DATA     -----     // \n');
     return {
         'EmanToken1': et1.address,
